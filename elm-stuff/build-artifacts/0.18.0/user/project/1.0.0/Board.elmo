@@ -1,0 +1,131 @@
+var _user$project$Board$cellStyles = {
+	ctor: '::',
+	_0: {ctor: '_Tuple2', _0: 'backgroundColor', _1: 'red'},
+	_1: {
+		ctor: '::',
+		_0: {ctor: '_Tuple2', _0: 'height', _1: '90px'},
+		_1: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: 'width', _1: '90px'},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: 'border', _1: '1px solid black'},
+				_1: {ctor: '[]'}
+			}
+		}
+	}
+};
+var _user$project$Board$cell = function (cell) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$style(_user$project$Board$cellStyles),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(_user$project$Board$cellStyles),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'X: ',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								_elm_lang$core$Basics$toString(cell.x),
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									' Y: ',
+									_elm_lang$core$Basics$toString(cell.y))))),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Board$rowStyle = {
+	ctor: '::',
+	_0: {ctor: '_Tuple2', _0: 'display', _1: 'flex'},
+	_1: {ctor: '[]'}
+};
+var _user$project$Board$gridStyle = {
+	ctor: '::',
+	_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-block'},
+	_1: {
+		ctor: '::',
+		_0: {ctor: '_Tuple2', _0: 'border', _1: '1px solid black'},
+		_1: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: 'align', _1: 'center'},
+			_1: {ctor: '[]'}
+		}
+	}
+};
+var _user$project$Board$renderList = function (grid) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$style(_user$project$Board$gridStyle),
+			_1: {ctor: '[]'}
+		},
+		A2(
+			_elm_lang$core$List$map,
+			function (_p0) {
+				return A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$style(_user$project$Board$rowStyle),
+						_1: {ctor: '[]'}
+					},
+					A2(_elm_lang$core$List$map, _user$project$Board$cell, _p0));
+			},
+			grid));
+};
+var _user$project$Board$Cell = F5(
+	function (a, b, c, d, e) {
+		return {x: a, y: b, hasChecker: c, selected: d, available: e};
+	});
+var _user$project$Board$initialCell = F2(
+	function (y_, x_) {
+		var available = false;
+		var selected = false;
+		var hasChecker = false;
+		var y = y_;
+		var x = x_;
+		return A5(_user$project$Board$Cell, x, y, hasChecker, selected, available);
+	});
+var _user$project$Board$initialRow = function (y) {
+	return A2(
+		_elm_lang$core$List$map,
+		_user$project$Board$initialCell(y),
+		A2(
+			_elm_lang$core$List$indexedMap,
+			function (y) {
+				return F2(
+					function (x, y) {
+						return x + y;
+					})(1);
+			},
+			A2(_elm_lang$core$List$range, -1, 6)));
+};
+var _user$project$Board$initialGrid = A2(
+	_elm_lang$core$List$map,
+	_user$project$Board$initialRow,
+	A2(
+		_elm_lang$core$List$indexedMap,
+		function (y) {
+			return F2(
+				function (x, y) {
+					return x + y;
+				})(1);
+		},
+		A2(_elm_lang$core$List$range, -1, 6)));

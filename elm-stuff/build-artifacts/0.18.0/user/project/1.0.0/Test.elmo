@@ -1,0 +1,2 @@
+var _user$project$Test$init = _user$project$Board$renderList(_user$project$Board$initialGrid);
+var _user$project$Test$main = _elm_lang$virtual_dom$Native_VirtualDom.staticProgram(_user$project$Test$init);
