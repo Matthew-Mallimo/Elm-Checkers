@@ -62,6 +62,34 @@ cellStyles =
     , ("border", "1px solid black")
     ]
 
+checkerStyles : Cell -> List(String,String)
+checkerStyles cell =
+    let 
+        color = 
+            if cell.hasChecker then
+                "green"
+            else
+                "red"
+        radius = 
+            if cell.hasChecker then
+                "50%"
+            else
+                ""
+        visible = 
+            if cell.hasChecker then
+                "visible"
+            else
+                "hidden"
+    in
+        [ ("backgroundColor", color)
+        , ("height", "80px")
+        , ("width", "80px")
+        , ("margin-top", "5px")
+        , ("margin-left", "5px")
+        , ("border-radius",radius)
+        , ("visible", visible)
+        ]
+
 -- This renderes the grid to the screen
 -- By providing the main div, populated
 -- 
@@ -76,7 +104,6 @@ cell cell =
   div
     [ style cellStyles]
     [ div
-      [ style cellStyles]
-      [ text ("X: " ++ (toString cell.x) ++ 
-      " Y: " ++ (toString cell.y) ++ "Checker: " ++ toString cell.hasChecker)]
+      [ style (checkerStyles cell)]
+      [ text ""]
     ]

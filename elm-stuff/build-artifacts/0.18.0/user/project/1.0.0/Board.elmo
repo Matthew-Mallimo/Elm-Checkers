@@ -1,3 +1,37 @@
+var _user$project$Board$checkerStyles = function (cell) {
+	var visible = cell.hasChecker ? 'visible' : 'hidden';
+	var radius = cell.hasChecker ? '50%' : '';
+	var color = cell.hasChecker ? 'green' : 'red';
+	return {
+		ctor: '::',
+		_0: {ctor: '_Tuple2', _0: 'backgroundColor', _1: color},
+		_1: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: 'height', _1: '80px'},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: 'width', _1: '80px'},
+				_1: {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'margin-top', _1: '5px'},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'margin-left', _1: '5px'},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'border-radius', _1: radius},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'visible', _1: visible},
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				}
+			}
+		}
+	};
+};
 var _user$project$Board$cellStyles = {
 	ctor: '::',
 	_0: {ctor: '_Tuple2', _0: 'backgroundColor', _1: 'red'},
@@ -29,28 +63,13 @@ var _user$project$Board$cell = function (cell) {
 				_elm_lang$html$Html$div,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$style(_user$project$Board$cellStyles),
+					_0: _elm_lang$html$Html_Attributes$style(
+						_user$project$Board$checkerStyles(cell)),
 					_1: {ctor: '[]'}
 				},
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html$text(
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							'X: ',
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								_elm_lang$core$Basics$toString(cell.x),
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									' Y: ',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(cell.y),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											'Checker: ',
-											_elm_lang$core$Basics$toString(cell.hasChecker))))))),
+					_0: _elm_lang$html$Html$text(''),
 					_1: {ctor: '[]'}
 				}),
 			_1: {ctor: '[]'}
