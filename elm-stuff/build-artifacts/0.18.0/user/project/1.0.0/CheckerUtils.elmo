@@ -1,0 +1,16 @@
+var _user$project$CheckerUtils$initialCheckerCell = F2(
+	function (x_, y_) {
+		return (_elm_lang$core$Native_Utils.cmp(y_, 2) < 1) ? (_elm_lang$core$Native_Utils.eq(
+			A2(_elm_lang$core$Basics_ops['%'], y_, 2),
+			0) ? (_elm_lang$core$Native_Utils.eq(
+			A2(_elm_lang$core$Basics_ops['%'], x_, 2),
+			0) ? true : false) : ((!_elm_lang$core$Native_Utils.eq(
+			A2(_elm_lang$core$Basics_ops['%'], x_, 2),
+			0)) ? true : false)) : ((_elm_lang$core$Native_Utils.cmp(y_, 5) > -1) ? (_elm_lang$core$Native_Utils.eq(
+			A2(_elm_lang$core$Basics_ops['%'], y_, 2),
+			0) ? (_elm_lang$core$Native_Utils.eq(
+			A2(_elm_lang$core$Basics_ops['%'], x_, 2),
+			0) ? true : false) : ((!_elm_lang$core$Native_Utils.eq(
+			A2(_elm_lang$core$Basics_ops['%'], x_, 2),
+			0)) ? true : false)) : false);
+	});

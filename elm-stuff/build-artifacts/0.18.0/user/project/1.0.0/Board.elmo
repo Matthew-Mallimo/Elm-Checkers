@@ -44,7 +44,13 @@ var _user$project$Board$cell = function (cell) {
 								A2(
 									_elm_lang$core$Basics_ops['++'],
 									' Y: ',
-									_elm_lang$core$Basics$toString(cell.y))))),
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										_elm_lang$core$Basics$toString(cell.y),
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'Checker: ',
+											_elm_lang$core$Basics$toString(cell.hasChecker))))))),
 					_1: {ctor: '[]'}
 				}),
 			_1: {ctor: '[]'}
@@ -98,7 +104,7 @@ var _user$project$Board$initialCell = F2(
 	function (y_, x_) {
 		var available = false;
 		var selected = false;
-		var hasChecker = false;
+		var hasChecker = A2(_user$project$CheckerUtils$initialCheckerCell, x_, y_);
 		var y = y_;
 		var x = x_;
 		return A5(_user$project$Board$Cell, x, y, hasChecker, selected, available);

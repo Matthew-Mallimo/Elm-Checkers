@@ -23,7 +23,7 @@ initialCell y_ x_=
     let
         x = x_
         y = y_
-        hasChecker = False
+        hasChecker = initialCheckerCell x_ y_
         selected = False
         available = False
     in
@@ -78,5 +78,5 @@ cell cell =
     [ div
       [ style cellStyles]
       [ text ("X: " ++ (toString cell.x) ++ 
-      " Y: " ++ (toString cell.y))]
+      " Y: " ++ (toString cell.y) ++ "Checker: " ++ toString cell.hasChecker)]
     ]
