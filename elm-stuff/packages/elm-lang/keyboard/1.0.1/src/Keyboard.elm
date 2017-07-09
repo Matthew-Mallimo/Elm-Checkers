@@ -35,7 +35,7 @@ type alias KeyCode =
 
 keyCode : Json.Decoder KeyCode
 keyCode =
-  Json.field "keyCode" Json.int
+  Json.grid "keyCode" Json.int
 
 
 

@@ -609,7 +609,7 @@ var _elm_lang$virtual_dom$VirtualDom_Expando$update = F2(
 					'VirtualDom.Expando',
 					{
 						start: {line: 168, column: 3},
-						end: {line: 235, column: 50}
+						end: {line: 235, column: 49}
 					},
 					_p31)('No messages for primitives');
 			case 'Primitive':
@@ -617,7 +617,7 @@ var _elm_lang$virtual_dom$VirtualDom_Expando$update = F2(
 					'VirtualDom.Expando',
 					{
 						start: {line: 168, column: 3},
-						end: {line: 235, column: 50}
+						end: {line: 235, column: 49}
 					},
 					_p31)('No messages for primitives');
 			case 'Sequence':
@@ -644,7 +644,7 @@ var _elm_lang$virtual_dom$VirtualDom_Expando$update = F2(
 								'VirtualDom.Expando',
 								{
 									start: {line: 176, column: 7},
-									end: {line: 188, column: 46}
+									end: {line: 188, column: 45}
 								},
 								_p34)('No redirected indexes on sequences');
 						}
@@ -653,9 +653,9 @@ var _elm_lang$virtual_dom$VirtualDom_Expando$update = F2(
 							'VirtualDom.Expando',
 							{
 								start: {line: 176, column: 7},
-								end: {line: 188, column: 46}
+								end: {line: 188, column: 45}
 							},
-							_p34)('No field on sequences');
+							_p34)('No grid on sequences');
 				}
 			case 'Dictionary':
 				var _p51 = _p31._1;
@@ -715,9 +715,9 @@ var _elm_lang$virtual_dom$VirtualDom_Expando$update = F2(
 							'VirtualDom.Expando',
 							{
 								start: {line: 191, column: 7},
-								end: {line: 209, column: 50}
+								end: {line: 209, column: 49}
 							},
-							_p40)('no field for dictionaries');
+							_p40)('no grid for dictionaries');
 				}
 			case 'Record':
 				var _p55 = _p31._1;
@@ -731,7 +731,7 @@ var _elm_lang$virtual_dom$VirtualDom_Expando$update = F2(
 							'VirtualDom.Expando',
 							{
 								start: {line: 212, column: 7},
-								end: {line: 220, column: 77}
+								end: {line: 220, column: 76}
 							},
 							_p52)('No index for records');
 					default:
@@ -768,7 +768,7 @@ var _elm_lang$virtual_dom$VirtualDom_Expando$update = F2(
 								'VirtualDom.Expando',
 								{
 									start: {line: 223, column: 7},
-									end: {line: 235, column: 50}
+									end: {line: 235, column: 49}
 								},
 								_p56)('No redirected indexes on sequences');
 						}
@@ -777,9 +777,9 @@ var _elm_lang$virtual_dom$VirtualDom_Expando$update = F2(
 							'VirtualDom.Expando',
 							{
 								start: {line: 223, column: 7},
-								end: {line: 235, column: 50}
+								end: {line: 235, column: 49}
 							},
-							_p56)('No field for constructors');
+							_p56)('No grid for constructors');
 				}
 		}
 	});
@@ -808,9 +808,9 @@ var _elm_lang$virtual_dom$VirtualDom_Expando$S = function (a) {
 var _elm_lang$virtual_dom$VirtualDom_Expando$ArraySeq = {ctor: 'ArraySeq'};
 var _elm_lang$virtual_dom$VirtualDom_Expando$SetSeq = {ctor: 'SetSeq'};
 var _elm_lang$virtual_dom$VirtualDom_Expando$ListSeq = {ctor: 'ListSeq'};
-var _elm_lang$virtual_dom$VirtualDom_Expando$Field = F2(
+var _elm_lang$virtual_dom$VirtualDom_Expando$Grid = F2(
 	function (a, b) {
-		return {ctor: 'Field', _0: a, _1: b};
+		return {ctor: 'Grid', _0: a, _1: b};
 	});
 var _elm_lang$virtual_dom$VirtualDom_Expando$Index = F3(
 	function (a, b, c) {
@@ -1193,7 +1193,7 @@ var _elm_lang$virtual_dom$VirtualDom_Expando$viewRecordEntry = function (_p75) {
 	var _p77 = _p76._0;
 	return A2(
 		_elm_lang$virtual_dom$VirtualDom_Helpers$map,
-		_elm_lang$virtual_dom$VirtualDom_Expando$Field(_p77),
+		_elm_lang$virtual_dom$VirtualDom_Expando$Grid(_p77),
 		A2(
 			_elm_lang$virtual_dom$VirtualDom_Expando$view,
 			_elm_lang$core$Maybe$Just(_p77),

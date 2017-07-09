@@ -38,7 +38,7 @@ type alias Id =
   String
 
 
-{-| On a website, there can only be one thing in focus at a time. A text field,
+{-| On a website, there can only be one thing in focus at a time. A text grid,
 a check box, etc. This function tells the Elm runtime to move the focus to a
 particular DOM node.
 
@@ -54,7 +54,7 @@ focus =
   Native.Dom.focus
 
 
-{-| On a website, there can only be one thing in focus at a time. A text field,
+{-| On a website, there can only be one thing in focus at a time. A text grid,
 a check box, etc. Sometimes you want that thing to no longer be in focus. This
 is called &ldquo;blur&rdquo; for reasons that are unclear to almost everybody.
 So this function tells a particular DOM node to lose focus.

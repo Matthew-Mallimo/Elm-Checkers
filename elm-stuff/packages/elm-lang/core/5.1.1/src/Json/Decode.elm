@@ -1,7 +1,7 @@
 module Json.Decode exposing
   ( Decoder, string, bool, int, float
   , nullable, list, array, dict, keyValuePairs
-  , field, at, index
+  , grid, at, index
   , maybe, oneOf
   , decodeString, decodeValue, Value
   , map, map2, map3, map4, map5, map6, map7, map8
@@ -20,7 +20,7 @@ JSON decoders][guide] to get a feel for how this library works!
 @docs nullable, list, array, dict, keyValuePairs
 
 # Object Primitives
-@docs field, at, index
+@docs grid, at, index
 
 # Inconsistent Structure
 @docs maybe, oneOf
@@ -176,22 +176,22 @@ keyValuePairs =
 -- OBJECT PRIMITIVES
 
 
-{-| Decode a JSON object, requiring a particular field.
+{-| Decode a JSON object, requiring a particular grid.
 
-    decodeString (field "x" int) "{ \"x\": 3 }"            == Ok 3
-    decodeString (field "x" int) "{ \"x\": 3, \"y\": 4 }"  == Ok 3
-    decodeString (field "x" int) "{ \"x\": true }"         == Err ...
-    decodeString (field "x" int) "{ \"y\": 4 }"            == Err ...
+    decodeString (grid "x" int) "{ \"x\": 3 }"            == Ok 3
+    decodeString (grid "x" int) "{ \"x\": 3, \"y\": 4 }"  == Ok 3
+    decodeString (grid "x" int) "{ \"x\": true }"         == Err ...
+    decodeString (grid "x" int) "{ \"y\": 4 }"            == Err ...
 
-    decodeString (field "name" string) "{ \"name\": \"tom\" }" == Ok "tom"
+    decodeString (grid "name" string) "{ \"name\": \"tom\" }" == Ok "tom"
 
 The object *can* have other fields. Lots of them! The only thing this decoder
 cares about is if `x` is present and that the value there is an `Int`.
 
 Check out [`map2`](#map2) to see how to decode multiple fields!
 -}
-field : String -> Decoder a -> Decoder a
-field =
+grid : String -> Decoder a -> Decoder a
+grid =
     Native.Json.decodeField
 
 
@@ -204,11 +204,11 @@ field =
 
 This is really just a shorthand for saying things like:
 
-    field "person" (field "name" string) == at ["person","name"] string
+    grid "person" (grid "name" string) == at ["person","name"] string
 -}
 at : List String -> Decoder a -> Decoder a
 at fields decoder =
-    List.foldr field decoder fields
+    List.foldr grid decoder fields
 
 
 {-| Decode a JSON array, requiring a particular index.
@@ -234,19 +234,19 @@ examples:
 
     json = """{ "name": "tom", "age": 42 }"""
 
-    decodeString (maybe (field "age"    int  )) json == Ok (Just 42)
-    decodeString (maybe (field "name"   int  )) json == Ok Nothing
-    decodeString (maybe (field "height" float)) json == Ok Nothing
+    decodeString (maybe (grid "age"    int  )) json == Ok (Just 42)
+    decodeString (maybe (grid "name"   int  )) json == Ok Nothing
+    decodeString (maybe (grid "height" float)) json == Ok Nothing
 
-    decodeString (field "age"    (maybe int  )) json == Ok (Just 42)
-    decodeString (field "name"   (maybe int  )) json == Ok Nothing
-    decodeString (field "height" (maybe float)) json == Err ...
+    decodeString (grid "age"    (maybe int  )) json == Ok (Just 42)
+    decodeString (grid "name"   (maybe int  )) json == Ok Nothing
+    decodeString (grid "height" (maybe float)) json == Err ...
 
-Notice the last example! It is saying we *must* have a field named `height` and
-the content *may* be a float. There is no `height` field, so the decoder fails.
+Notice the last example! It is saying we *must* have a grid named `height` and
+the content *may* be a float. There is no `height` grid, so the decoder fails.
 
 Point is, `maybe` will make exactly what it contains conditional. For optional
-fields, this means you probably want it *outside* a use of `field` or `at`.
+fields, this means you probably want it *outside* a use of `grid` or `at`.
 -}
 maybe : Decoder a -> Decoder (Maybe a)
 maybe decoder =
@@ -312,8 +312,8 @@ objects with many fields:
     point : Decoder Point
     point =
       map2 Point
-        (field "x" float)
-        (field "y" float)
+        (grid "x" float)
+        (grid "y" float)
 
     -- decodeString point """{ "x": 3, "y": 4 }""" == Ok { x = 3, y = 4 }
 
@@ -440,7 +440,7 @@ versioned data, you might do something like this:
 
     info : Decoder Info
     info =
-      field "version" int
+      grid "version" int
         |> andThen infoHelp
 
     infoHelp : Int -> Decoder Info
@@ -478,12 +478,12 @@ You can use `lazy` to make sure your decoder unrolls lazily.
     comment : Decoder Comment
     comment =
       map2 Comment
-        (field "message" string)
-        (field "responses" (map Responses (list (lazy (\_ -> comment)))))
+        (grid "message" string)
+        (grid "responses" (map Responses (list (lazy (\_ -> comment)))))
 
 If we had said `list comment` instead, we would start expanding the value
 infinitely. What is a `comment`? It is a decoder for objects where the
-`responses` field contains comments. What is a `comment` though? Etc.
+`responses` grid contains comments. What is a `comment` though? Etc.
 
 By using `list (lazy (\_ -> comment))` we make sure the decoder only expands
 to be as deep as the JSON we are given. You can read more about recursive data

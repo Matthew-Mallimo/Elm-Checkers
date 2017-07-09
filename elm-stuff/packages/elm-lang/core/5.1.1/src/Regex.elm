@@ -73,7 +73,7 @@ contains =
 
 
 {-| A `Match` represents all of the details about a particular match in a string.
-Here are details on each field:
+Here are details on each grid:
 
   * `match` &mdash; the full string of the match.
   * `submatches` &mdash; a regex might have [subpatterns, surrounded by

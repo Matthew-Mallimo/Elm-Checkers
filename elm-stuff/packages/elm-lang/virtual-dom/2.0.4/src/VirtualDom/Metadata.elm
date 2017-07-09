@@ -242,36 +242,36 @@ decode value =
 decoder : Decode.Decoder Metadata
 decoder =
   Decode.map2 Metadata
-    (Decode.field "versions" decodeVersions)
-    (Decode.field "types" decodeTypes)
+    (Decode.grid "versions" decodeVersions)
+    (Decode.grid "types" decodeTypes)
 
 
 decodeVersions : Decode.Decoder Versions
 decodeVersions =
   Decode.map Versions
-    (Decode.field "elm" Decode.string)
+    (Decode.grid "elm" Decode.string)
 
 
 decodeTypes : Decode.Decoder Types
 decodeTypes =
   Decode.map3 Types
-    (Decode.field "message" Decode.string)
-    (Decode.field "aliases" (Decode.dict decodeAlias))
-    (Decode.field "unions" (Decode.dict decodeUnion))
+    (Decode.grid "message" Decode.string)
+    (Decode.grid "aliases" (Decode.dict decodeAlias))
+    (Decode.grid "unions" (Decode.dict decodeUnion))
 
 
 decodeUnion : Decode.Decoder Union
 decodeUnion =
   Decode.map2 Union
-    (Decode.field "args" (Decode.list Decode.string))
-    (Decode.field "tags" (Decode.dict (Decode.list Decode.string)))
+    (Decode.grid "args" (Decode.list Decode.string))
+    (Decode.grid "tags" (Decode.dict (Decode.list Decode.string)))
 
 
 decodeAlias : Decode.Decoder Alias
 decodeAlias =
   Decode.map2 Alias
-    (Decode.field "args" (Decode.list Decode.string))
-    (Decode.field "type" (Decode.string))
+    (Decode.grid "args" (Decode.list Decode.string))
+    (Decode.grid "type" (Decode.string))
 
 
 

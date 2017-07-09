@@ -1,3 +1,218 @@
+var _user$project$CheckerUtils$canBlackMove = F2(
+	function (cellInit, cellEnd) {
+		return (_elm_lang$core$Native_Utils.eq(cellInit.y - cellEnd.y, 1) && _elm_lang$core$Native_Utils.eq(
+			_elm_lang$core$Basics$abs(cellInit.x - cellEnd.x),
+			1)) ? true : false;
+	});
+var _user$project$CheckerUtils$canWhiteMove = F2(
+	function (cellInit, cellEnd) {
+		return (_elm_lang$core$Native_Utils.eq(cellEnd.y - cellInit.y, 1) && _elm_lang$core$Native_Utils.eq(
+			_elm_lang$core$Basics$abs(cellEnd.x - cellInit.x),
+			1)) ? true : false;
+	});
+var _user$project$CheckerUtils$avg = function (list) {
+	return (_elm_lang$core$List$sum(list) / _elm_lang$core$List$length(list)) | 0;
+};
+var _user$project$CheckerUtils$getCellFromPos = F3(
+	function (x, y, grid) {
+		return _elm_lang$core$List$head(
+			A2(
+				_elm_lang$core$List$drop,
+				x,
+				A2(
+					_elm_lang$core$List$drop,
+					y * 8,
+					_elm_lang$core$List$concat(grid))));
+	});
+var _user$project$CheckerUtils$canWhiteJump = F3(
+	function (cellInit, cellEnd, grid) {
+		return (_elm_lang$core$Native_Utils.eq(cellEnd.y - cellInit.y, 2) && (_elm_lang$core$Native_Utils.eq(
+			_elm_lang$core$Basics$abs(cellEnd.x - cellInit.x),
+			2) && function () {
+			var _p0 = A3(
+				_user$project$CheckerUtils$getCellFromPos,
+				_user$project$CheckerUtils$avg(
+					{
+						ctor: '::',
+						_0: cellInit.x,
+						_1: {
+							ctor: '::',
+							_0: cellEnd.x,
+							_1: {ctor: '[]'}
+						}
+					}),
+				_user$project$CheckerUtils$avg(
+					{
+						ctor: '::',
+						_0: cellInit.y,
+						_1: {
+							ctor: '::',
+							_0: cellEnd.y,
+							_1: {ctor: '[]'}
+						}
+					}),
+				grid);
+			if (_p0.ctor === 'Just') {
+				var _p1 = _p0._0;
+				return _elm_lang$core$Native_Utils.eq(_p1.hasChecker, true) && (!_elm_lang$core$Native_Utils.eq(_p1.chkColor, 'white'));
+			} else {
+				return A2(
+					_elm_lang$core$Native_Utils.crash(
+						'CheckerUtils',
+						{
+							start: {line: 256, column: 9},
+							end: {line: 256, column: 14}
+						}),
+					'Not there!',
+					false);
+			}
+		}())) ? true : false;
+	});
+var _user$project$CheckerUtils$whiteMoveValid = F3(
+	function (cellInit, cellEnd, grid) {
+		return _elm_lang$core$Native_Utils.eq(cellEnd.hasChecker, false) ? (A2(_user$project$CheckerUtils$canWhiteMove, cellInit, cellEnd) ? true : (A3(_user$project$CheckerUtils$canWhiteJump, cellInit, cellEnd, grid) ? true : false)) : false;
+	});
+var _user$project$CheckerUtils$canBlackJump = F3(
+	function (cellInit, cellEnd, grid) {
+		return (_elm_lang$core$Native_Utils.eq(cellInit.y - cellEnd.y, 2) && (_elm_lang$core$Native_Utils.eq(
+			_elm_lang$core$Basics$abs(cellInit.x - cellEnd.x),
+			2) && function () {
+			var _p2 = A3(
+				_user$project$CheckerUtils$getCellFromPos,
+				_user$project$CheckerUtils$avg(
+					{
+						ctor: '::',
+						_0: cellInit.x,
+						_1: {
+							ctor: '::',
+							_0: cellEnd.x,
+							_1: {ctor: '[]'}
+						}
+					}),
+				_user$project$CheckerUtils$avg(
+					{
+						ctor: '::',
+						_0: cellInit.y,
+						_1: {
+							ctor: '::',
+							_0: cellEnd.y,
+							_1: {ctor: '[]'}
+						}
+					}),
+				grid);
+			if (_p2.ctor === 'Just') {
+				var _p3 = _p2._0;
+				return _elm_lang$core$Native_Utils.eq(_p3.hasChecker, true) && (!_elm_lang$core$Native_Utils.eq(_p3.chkColor, 'black'));
+			} else {
+				return false;
+			}
+		}())) ? true : false;
+	});
+var _user$project$CheckerUtils$blackMoveValid = F3(
+	function (cellInit, cellEnd, grid) {
+		return _elm_lang$core$Native_Utils.eq(cellEnd.hasChecker, false) ? (A2(_user$project$CheckerUtils$canBlackMove, cellInit, cellEnd) ? true : (A3(_user$project$CheckerUtils$canBlackJump, cellInit, cellEnd, grid) ? true : false)) : false;
+	});
+var _user$project$CheckerUtils$isValidMove = F3(
+	function (cellInit, cellEnd, grid) {
+		return _elm_lang$core$Native_Utils.eq(cellInit.chkColor, 'white') ? A3(_user$project$CheckerUtils$whiteMoveValid, cellInit, cellEnd, grid) : A3(_user$project$CheckerUtils$blackMoveValid, cellInit, cellEnd, grid);
+	});
+var _user$project$CheckerUtils$isTrue = F2(
+	function (x, y) {
+		return _elm_lang$core$Native_Utils.eq(x, y);
+	})(true);
+var _user$project$CheckerUtils$between = F3(
+	function (a, b, x) {
+		return ((_elm_lang$core$Native_Utils.cmp(a, x) < 0) && (_elm_lang$core$Native_Utils.cmp(x, b) < 0)) || ((_elm_lang$core$Native_Utils.cmp(b, x) < 0) && (_elm_lang$core$Native_Utils.cmp(x, a) < 0));
+	});
+var _user$project$CheckerUtils$getSelected = function (grid) {
+	return _elm_lang$core$List$head(
+		A2(
+			_elm_lang$core$List$filter,
+			function (_) {
+				return _.selected;
+			},
+			_elm_lang$core$List$concat(grid)));
+};
+var _user$project$CheckerUtils$updateCellsIf = F2(
+	function (pred, update) {
+		return _elm_lang$core$List$map(
+			_elm_lang$core$List$map(
+				function (cell) {
+					return pred(cell) ? update(cell) : cell;
+				}));
+	});
+var _user$project$CheckerUtils$updateCell = F3(
+	function (fn, x_, y_) {
+		return A2(
+			_user$project$CheckerUtils$updateCellsIf,
+			function (c) {
+				return _elm_lang$core$Native_Utils.eq(c.x, x_) && _elm_lang$core$Native_Utils.eq(c.y, y_);
+			},
+			fn);
+	});
+var _user$project$CheckerUtils$updateCells = _user$project$CheckerUtils$updateCellsIf(
+	function (c) {
+		return true;
+	});
+var _user$project$CheckerUtils$clearGrid = _user$project$CheckerUtils$updateCells(
+	function (cell) {
+		return _elm_lang$core$Native_Utils.update(
+			cell,
+			{selected: false, available: false});
+	});
+var _user$project$CheckerUtils$selectCell = F2(
+	function (c, grid) {
+		return A2(
+			_user$project$CheckerUtils$updateCells,
+			function (cell) {
+				return _elm_lang$core$Native_Utils.update(
+					cell,
+					{
+						selected: _elm_lang$core$Native_Utils.eq(cell.x, c.x) && _elm_lang$core$Native_Utils.eq(cell.y, c.y),
+						available: A3(_user$project$CheckerUtils$isValidMove, c, cell, grid)
+					});
+			},
+			grid);
+	});
+var _user$project$CheckerUtils$makeMove = F3(
+	function (from, to, grid) {
+		return A3(_user$project$CheckerUtils$isValidMove, from, to, grid) ? _elm_lang$core$Maybe$Just(
+			A2(
+				_user$project$CheckerUtils$updateCells,
+				function (cell) {
+					return _elm_lang$core$Native_Utils.update(
+						cell,
+						{
+							chkColor: (_elm_lang$core$Native_Utils.eq(cell.x, to.x) && _elm_lang$core$Native_Utils.eq(cell.y, to.y)) ? from.chkColor : ((_elm_lang$core$Native_Utils.eq(cell.x, from.x) && _elm_lang$core$Native_Utils.eq(cell.y, from.y)) ? 'none' : ((A3(_user$project$CheckerUtils$between, from.x, to.x, cell.x) && A3(_user$project$CheckerUtils$between, from.y, to.y, cell.y)) ? 'none' : cell.chkColor)),
+							selected: false,
+							available: false,
+							hasChecker: (_elm_lang$core$Native_Utils.eq(cell.x, to.x) && _elm_lang$core$Native_Utils.eq(cell.y, to.y)) ? true : ((_elm_lang$core$Native_Utils.eq(cell.x, from.x) && _elm_lang$core$Native_Utils.eq(cell.y, from.y)) ? false : ((A3(_user$project$CheckerUtils$between, from.x, to.x, cell.x) && A3(_user$project$CheckerUtils$between, from.y, to.y, cell.y)) ? false : cell.hasChecker))
+						});
+				},
+				grid)) : _elm_lang$core$Maybe$Nothing;
+	});
+var _user$project$CheckerUtils$makeMoveFromSelected = F2(
+	function (to, grid) {
+		var selected = _user$project$CheckerUtils$getSelected(grid);
+		var _p4 = selected;
+		if (_p4.ctor === 'Just') {
+			return A3(_user$project$CheckerUtils$makeMove, _p4._0, to, grid);
+		} else {
+			return _elm_lang$core$Maybe$Just(grid);
+		}
+	});
+var _user$project$CheckerUtils$isBottomLines = F2(
+	function (x, y) {
+		return _elm_lang$core$Native_Utils.cmp(y, 4) > 0;
+	});
+var _user$project$CheckerUtils$isTopLines = F2(
+	function (x, y) {
+		return _elm_lang$core$Native_Utils.cmp(y, 3) < 0;
+	});
+var _user$project$CheckerUtils$getInitialCheckerColor = F2(
+	function (x_, y_) {
+		return (_elm_lang$core$Native_Utils.cmp(y_, 2) < 1) ? 'white' : ((_elm_lang$core$Native_Utils.cmp(y_, 5) > -1) ? 'black' : 'none');
+	});
 var _user$project$CheckerUtils$initialCheckerCell = F2(
 	function (x_, y_) {
 		return (_elm_lang$core$Native_Utils.cmp(y_, 2) < 1) ? (_elm_lang$core$Native_Utils.eq(
@@ -14,3 +229,23 @@ var _user$project$CheckerUtils$initialCheckerCell = F2(
 			A2(_elm_lang$core$Basics_ops['%'], x_, 2),
 			0)) ? true : false)) : false);
 	});
+var _user$project$CheckerUtils$Cell = F7(
+	function (a, b, c, d, e, f, g) {
+		return {x: a, y: b, hasChecker: c, selected: d, available: e, checkerColor: f, chkColor: g};
+	});
+var _user$project$CheckerUtils$Model = F2(
+	function (a, b) {
+		return {grid: a, turn: b};
+	});
+var _user$project$CheckerUtils$White = {ctor: 'White'};
+var _user$project$CheckerUtils$Black = {ctor: 'Black'};
+var _user$project$CheckerUtils$getInitialCheckerColor2 = F2(
+	function (x, y) {
+		return A2(_user$project$CheckerUtils$isTopLines, x, y) ? _elm_lang$core$Maybe$Just(_user$project$CheckerUtils$Black) : (A2(_user$project$CheckerUtils$isBottomLines, x, y) ? _elm_lang$core$Maybe$Just(_user$project$CheckerUtils$White) : _elm_lang$core$Maybe$Nothing);
+	});
+var _user$project$CheckerUtils$MakeMove = function (a) {
+	return {ctor: 'MakeMove', _0: a};
+};
+var _user$project$CheckerUtils$SelectCheker = function (a) {
+	return {ctor: 'SelectCheker', _0: a};
+};

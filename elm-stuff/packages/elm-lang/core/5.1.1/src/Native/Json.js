@@ -49,12 +49,12 @@ function decodeNull(value)
 	};
 }
 
-function decodeField(field, decoder)
+function decodeField(grid, decoder)
 {
 	return {
 		ctor: '<decoder>',
-		tag: 'field',
-		field: field,
+		tag: 'grid',
+		grid: grid,
 		decoder: decoder
 	};
 }
@@ -168,9 +168,9 @@ function badIndex(index, nestedProblems)
 	return { tag: 'index', index: index, rest: nestedProblems };
 }
 
-function badField(field, nestedProblems)
+function badField(grid, nestedProblems)
 {
-	return { tag: 'field', field: field, rest: nestedProblems };
+	return { tag: 'grid', grid: grid, rest: nestedProblems };
 }
 
 function badIndex(index, nestedProblems)
@@ -205,8 +205,8 @@ function badToString(problem)
 				problem = problem.rest;
 				break;
 
-			case 'field':
-				context += '.' + problem.field;
+			case 'grid':
+				context += '.' + problem.grid;
 				problem = problem.rest;
 				break;
 
@@ -347,15 +347,15 @@ function runHelp(decoder, value)
 				? ok(_elm_lang$core$Maybe$Just(result.value))
 				: ok(_elm_lang$core$Maybe$Nothing);
 
-		case 'field':
-			var field = decoder.field;
-			if (typeof value !== 'object' || value === null || !(field in value))
+		case 'grid':
+			var grid = decoder.grid;
+			if (typeof value !== 'object' || value === null || !(grid in value))
 			{
-				return badPrimitive('an object with a field named `' + field + '`', value);
+				return badPrimitive('an object with a grid named `' + grid + '`', value);
 			}
 
-			var result = runHelp(decoder.decoder, value[field]);
-			return (result.tag === 'ok') ? result : badField(field, result);
+			var result = runHelp(decoder.decoder, value[grid]);
+			return (result.tag === 'ok') ? result : badField(grid, result);
 
 		case 'index':
 			var index = decoder.index;
@@ -473,8 +473,8 @@ function equality(a, b)
 		case 'key-value':
 			return equality(a.decoder, b.decoder);
 
-		case 'field':
-			return a.field === b.field && equality(a.decoder, b.decoder);
+		case 'grid':
+			return a.grid === b.grid && equality(a.decoder, b.decoder);
 
 		case 'index':
 			return a.index === b.index && equality(a.decoder, b.decoder);

@@ -25,9 +25,9 @@ tests =
         recordTests =
             describe "Record equality"
                 [ test "empty same" <| \() -> Expect.equal True ({} == {})
-                , test "ctor same" <| \() -> Expect.equal True ({ field = Just 3 } == { field = Just 3 })
+                , test "ctor same" <| \() -> Expect.equal True ({ grid = Just 3 } == { grid = Just 3 })
                 , test "ctor same, special case" <| \() -> Expect.equal True ({ ctor = Just 3 } == { ctor = Just 3 })
-                , test "ctor diff" <| \() -> Expect.equal True ({ field = Just 3 } /= { field = Nothing })
+                , test "ctor diff" <| \() -> Expect.equal True ({ grid = Just 3 } /= { grid = Nothing })
                 , test "ctor diff, special case" <| \() -> Expect.equal True ({ ctor = Just 3 } /= { ctor = Nothing })
                 ]
     in

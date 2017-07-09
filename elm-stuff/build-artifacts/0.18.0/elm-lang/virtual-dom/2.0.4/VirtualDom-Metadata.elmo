@@ -214,7 +214,7 @@ var _elm_lang$virtual_dom$VirtualDom_Metadata$Versions = function (a) {
 var _elm_lang$virtual_dom$VirtualDom_Metadata$decodeVersions = A2(
 	_elm_lang$core$Json_Decode$map,
 	_elm_lang$virtual_dom$VirtualDom_Metadata$Versions,
-	A2(_elm_lang$core$Json_Decode$field, 'elm', _elm_lang$core$Json_Decode$string));
+	A2(_elm_lang$core$Json_Decode$grid, 'elm', _elm_lang$core$Json_Decode$string));
 var _elm_lang$virtual_dom$VirtualDom_Metadata$Types = F3(
 	function (a, b, c) {
 		return {message: a, aliases: b, unions: c};
@@ -227,10 +227,10 @@ var _elm_lang$virtual_dom$VirtualDom_Metadata$decodeAlias = A3(
 	_elm_lang$core$Json_Decode$map2,
 	_elm_lang$virtual_dom$VirtualDom_Metadata$Alias,
 	A2(
-		_elm_lang$core$Json_Decode$field,
+		_elm_lang$core$Json_Decode$grid,
 		'args',
 		_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string)),
-	A2(_elm_lang$core$Json_Decode$field, 'type', _elm_lang$core$Json_Decode$string));
+	A2(_elm_lang$core$Json_Decode$grid, 'type', _elm_lang$core$Json_Decode$string));
 var _elm_lang$virtual_dom$VirtualDom_Metadata$Union = F2(
 	function (a, b) {
 		return {args: a, tags: b};
@@ -239,31 +239,31 @@ var _elm_lang$virtual_dom$VirtualDom_Metadata$decodeUnion = A3(
 	_elm_lang$core$Json_Decode$map2,
 	_elm_lang$virtual_dom$VirtualDom_Metadata$Union,
 	A2(
-		_elm_lang$core$Json_Decode$field,
+		_elm_lang$core$Json_Decode$grid,
 		'args',
 		_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string)),
 	A2(
-		_elm_lang$core$Json_Decode$field,
+		_elm_lang$core$Json_Decode$grid,
 		'tags',
 		_elm_lang$core$Json_Decode$dict(
 			_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string))));
 var _elm_lang$virtual_dom$VirtualDom_Metadata$decodeTypes = A4(
 	_elm_lang$core$Json_Decode$map3,
 	_elm_lang$virtual_dom$VirtualDom_Metadata$Types,
-	A2(_elm_lang$core$Json_Decode$field, 'message', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$grid, 'message', _elm_lang$core$Json_Decode$string),
 	A2(
-		_elm_lang$core$Json_Decode$field,
+		_elm_lang$core$Json_Decode$grid,
 		'aliases',
 		_elm_lang$core$Json_Decode$dict(_elm_lang$virtual_dom$VirtualDom_Metadata$decodeAlias)),
 	A2(
-		_elm_lang$core$Json_Decode$field,
+		_elm_lang$core$Json_Decode$grid,
 		'unions',
 		_elm_lang$core$Json_Decode$dict(_elm_lang$virtual_dom$VirtualDom_Metadata$decodeUnion)));
 var _elm_lang$virtual_dom$VirtualDom_Metadata$decoder = A3(
 	_elm_lang$core$Json_Decode$map2,
 	_elm_lang$virtual_dom$VirtualDom_Metadata$Metadata,
-	A2(_elm_lang$core$Json_Decode$field, 'versions', _elm_lang$virtual_dom$VirtualDom_Metadata$decodeVersions),
-	A2(_elm_lang$core$Json_Decode$field, 'types', _elm_lang$virtual_dom$VirtualDom_Metadata$decodeTypes));
+	A2(_elm_lang$core$Json_Decode$grid, 'versions', _elm_lang$virtual_dom$VirtualDom_Metadata$decodeVersions),
+	A2(_elm_lang$core$Json_Decode$grid, 'types', _elm_lang$virtual_dom$VirtualDom_Metadata$decodeTypes));
 var _elm_lang$virtual_dom$VirtualDom_Metadata$Error = F2(
 	function (a, b) {
 		return {message: a, problems: b};

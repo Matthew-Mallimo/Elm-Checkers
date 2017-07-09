@@ -1,29 +1,37 @@
 var _user$project$Board$checkerStyles = function (cell) {
+	var selected = cell.selected ? '2px solid cyan' : 'none';
 	var visible = cell.hasChecker ? 'visible' : 'hidden';
 	var radius = cell.hasChecker ? '50%' : '';
-	var color = cell.hasChecker ? 'green' : 'red';
 	return {
 		ctor: '::',
-		_0: {ctor: '_Tuple2', _0: 'backgroundColor', _1: color},
+		_0: {ctor: '_Tuple2', _0: 'backgroundColor', _1: cell.chkColor},
 		_1: {
 			ctor: '::',
-			_0: {ctor: '_Tuple2', _0: 'height', _1: '80px'},
+			_0: {ctor: '_Tuple2', _0: 'border', _1: selected},
 			_1: {
 				ctor: '::',
-				_0: {ctor: '_Tuple2', _0: 'width', _1: '80px'},
+				_0: {ctor: '_Tuple2', _0: 'height', _1: '80px'},
 				_1: {
 					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: 'margin-top', _1: '5px'},
+					_0: {ctor: '_Tuple2', _0: 'width', _1: '80px'},
 					_1: {
 						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: 'margin-left', _1: '5px'},
+						_0: {ctor: '_Tuple2', _0: 'margin-top', _1: '5px'},
 						_1: {
 							ctor: '::',
-							_0: {ctor: '_Tuple2', _0: 'border-radius', _1: radius},
+							_0: {ctor: '_Tuple2', _0: 'margin-left', _1: '5px'},
 							_1: {
 								ctor: '::',
-								_0: {ctor: '_Tuple2', _0: 'visible', _1: visible},
-								_1: {ctor: '[]'}
+								_0: {ctor: '_Tuple2', _0: 'border-radius', _1: radius},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'visibility', _1: visible},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'color', _1: 'cyan'},
+										_1: {ctor: '[]'}
+									}
+								}
 							}
 						}
 					}
@@ -55,7 +63,12 @@ var _user$project$Board$cell = function (cell) {
 		{
 			ctor: '::',
 			_0: _elm_lang$html$Html_Attributes$style(_user$project$Board$cellStyles),
-			_1: {ctor: '[]'}
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Events$onClick(
+					cell.hasChecker ? _user$project$CheckerUtils$SelectCheker(cell) : _user$project$CheckerUtils$MakeMove(cell)),
+				_1: {ctor: '[]'}
+			}
 		},
 		{
 			ctor: '::',
@@ -115,18 +128,16 @@ var _user$project$Board$renderList = function (grid) {
 			},
 			grid));
 };
-var _user$project$Board$Cell = F5(
-	function (a, b, c, d, e) {
-		return {x: a, y: b, hasChecker: c, selected: d, available: e};
-	});
 var _user$project$Board$initialCell = F2(
 	function (y_, x_) {
+		var chkColor = A2(_user$project$CheckerUtils$getInitialCheckerColor, x_, y_);
+		var checkerColor = A2(_user$project$CheckerUtils$getInitialCheckerColor2, x_, y_);
 		var available = false;
 		var selected = false;
 		var hasChecker = A2(_user$project$CheckerUtils$initialCheckerCell, x_, y_);
 		var y = y_;
 		var x = x_;
-		return A5(_user$project$Board$Cell, x, y, hasChecker, selected, available);
+		return A7(_user$project$CheckerUtils$Cell, x, y, hasChecker, selected, available, checkerColor, chkColor);
 	});
 var _user$project$Board$initialRow = function (y) {
 	return A2(

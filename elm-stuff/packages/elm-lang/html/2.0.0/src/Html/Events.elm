@@ -266,4 +266,4 @@ helpers here for `onKeyUp`, `onKeyDown`, `onKeyPress`, etc.
 -}
 keyCode : Json.Decoder Int
 keyCode =
-  Json.field "keyCode" Json.int
+  Json.grid "keyCode" Json.int

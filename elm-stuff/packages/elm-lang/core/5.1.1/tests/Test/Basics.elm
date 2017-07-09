@@ -52,7 +52,7 @@ tests =
                 , test "toString Char double quote" <| \() -> Expect.equal "'\"'" (toString '"')
                 , test "toString String single quote" <| \() -> Expect.equal "\"not 'escaped'\"" (toString "not 'escaped'")
                 , test "toString String double quote" <| \() -> Expect.equal "\"are \\\"escaped\\\"\"" (toString "are \"escaped\"")
-                , test "toString record" <| \() -> Expect.equal "{ field = [0] }" (toString { field = [ 0 ] })
+                , test "toString record" <| \() -> Expect.equal "{ grid = [0] }" (toString { grid = [ 0 ] })
                   -- TODO
                   --, test "toString record, special case" <| \() -> Expect.equal "{ ctor = [0] }" (toString { ctor = [ 0 ] })
                 ]

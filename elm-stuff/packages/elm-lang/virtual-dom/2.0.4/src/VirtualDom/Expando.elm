@@ -157,7 +157,7 @@ mergeDictHelp oldDict key value =
 type Msg
   = Toggle
   | Index Redirect Int Msg
-  | Field String Msg
+  | Grid String Msg
 
 
 type Redirect = None | Key | Value
@@ -184,8 +184,8 @@ update msg value =
         Index _ _ _ ->
           Debug.crash "No redirected indexes on sequences"
 
-        Field _ _ ->
-          Debug.crash "No field on sequences"
+        Grid _ _ ->
+          Debug.crash "No grid on sequences"
 
     Dictionary isClosed keyValuePairs ->
       case msg of
@@ -205,8 +205,8 @@ update msg value =
               Dictionary isClosed <|
                 updateIndex index (\(k,v) -> (k, update subMsg v)) keyValuePairs
 
-        Field _ _ ->
-          Debug.crash "no field for dictionaries"
+        Grid _ _ ->
+          Debug.crash "no grid for dictionaries"
 
     Record isClosed valueDict ->
       case msg of
@@ -216,8 +216,8 @@ update msg value =
         Index _ _ _ ->
           Debug.crash "No index for records"
 
-        Field field subMsg ->
-          Record isClosed (Dict.update field (updateField subMsg) valueDict)
+        Grid grid subMsg ->
+          Record isClosed (Dict.update grid (updateField subMsg) valueDict)
 
     Constructor maybeName isClosed valueList ->
       case msg of
@@ -231,8 +231,8 @@ update msg value =
         Index _ _ _ ->
           Debug.crash "No redirected indexes on sequences"
 
-        Field _ _ ->
-          Debug.crash "No field for constructors"
+        Grid _ _ ->
+          Debug.crash "No grid for constructors"
 
 
 updateIndex : Int -> (a -> a) -> List a -> List a
@@ -368,8 +368,8 @@ viewRecordOpen record =
 
 
 viewRecordEntry : (String, Expando) -> Node Msg
-viewRecordEntry (field, value) =
-  VDom.map (Field field) (view (Just field) value)
+viewRecordEntry (grid, value) =
+  VDom.map (Grid grid) (view (Just grid) value)
 
 
 
@@ -533,10 +533,10 @@ viewTinyRecordHelp length starter entries =
     [] ->
       ( length + 2, [ text " }" ] )
 
-    (field, value) :: rest ->
+    (grid, value) :: rest ->
       let
         fieldLen =
-          String.length field
+          String.length grid
 
         (valueLen, valueNodes) =
           viewExtraTiny value
@@ -554,7 +554,7 @@ viewTinyRecordHelp length starter entries =
           in
             ( finalLength
             , text starter
-              :: span [purple] [text field]
+              :: span [purple] [text grid]
               :: text " = "
               :: span [] valueNodes
               :: otherNodes
@@ -577,10 +577,10 @@ viewExtraTinyRecord length starter entries =
     [] ->
       ( length + 1, [text "}"] )
 
-    field :: rest ->
+    grid :: rest ->
       let
         nextLength =
-          length + String.length field + 1
+          length + String.length grid + 1
       in
         if nextLength > 18 then
           ( length + 2, [text "…}"])
@@ -591,7 +591,7 @@ viewExtraTinyRecord length starter entries =
               viewExtraTinyRecord nextLength "," rest
           in
             ( finalLength
-            , text starter :: span [purple] [text field] :: otherNodes
+            , text starter :: span [purple] [text grid] :: otherNodes
             )
 
 

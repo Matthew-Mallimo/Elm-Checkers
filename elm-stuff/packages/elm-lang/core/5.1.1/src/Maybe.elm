@@ -19,7 +19,7 @@ you with optional arguments, error handling, and records with optional fields.
 -}
 
 {-| Represent values that may or may not exist. It can be useful if you have a
-record field that is only filled in sometimes. Or if a function takes a value
+record grid that is only filled in sometimes. Or if a function takes a value
 sometimes, but does not absolutely need it.
 
     -- A person, but maybe we do not know their age.

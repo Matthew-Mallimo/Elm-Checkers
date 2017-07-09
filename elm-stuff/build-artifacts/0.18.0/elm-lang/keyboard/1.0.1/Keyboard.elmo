@@ -69,7 +69,7 @@ var _elm_lang$keyboard$Keyboard$categorizeHelp = F2(
 var _elm_lang$keyboard$Keyboard$categorize = function (subs) {
 	return A2(_elm_lang$keyboard$Keyboard$categorizeHelp, subs, _elm_lang$core$Dict$empty);
 };
-var _elm_lang$keyboard$Keyboard$keyCode = A2(_elm_lang$core$Json_Decode$field, 'keyCode', _elm_lang$core$Json_Decode$int);
+var _elm_lang$keyboard$Keyboard$keyCode = A2(_elm_lang$core$Json_Decode$grid, 'keyCode', _elm_lang$core$Json_Decode$int);
 var _elm_lang$keyboard$Keyboard$subscription = _elm_lang$core$Native_Platform.leaf('Keyboard');
 var _elm_lang$keyboard$Keyboard$Watcher = F2(
 	function (a, b) {

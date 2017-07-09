@@ -824,7 +824,7 @@ label =
   node "label"
 
 
-{-| Represents a typed data field allowing the user to edit the data. -}
+{-| Represents a typed data grid allowing the user to edit the data. -}
 input : List (Attribute msg) -> List (Html msg) -> Html msg
 input =
   node "input"

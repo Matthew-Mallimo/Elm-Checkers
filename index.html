@@ -5137,12 +5137,12 @@ function decodeNull(value)
 	};
 }
 
-function decodeField(field, decoder)
+function decodeField(grid, decoder)
 {
 	return {
 		ctor: '<decoder>',
-		tag: 'field',
-		field: field,
+		tag: 'grid',
+		grid: grid,
 		decoder: decoder
 	};
 }
@@ -5256,9 +5256,9 @@ function badIndex(index, nestedProblems)
 	return { tag: 'index', index: index, rest: nestedProblems };
 }
 
-function badField(field, nestedProblems)
+function badField(grid, nestedProblems)
 {
-	return { tag: 'field', field: field, rest: nestedProblems };
+	return { tag: 'grid', grid: grid, rest: nestedProblems };
 }
 
 function badIndex(index, nestedProblems)
@@ -5293,8 +5293,8 @@ function badToString(problem)
 				problem = problem.rest;
 				break;
 
-			case 'field':
-				context += '.' + problem.field;
+			case 'grid':
+				context += '.' + problem.grid;
 				problem = problem.rest;
 				break;
 
@@ -5435,15 +5435,15 @@ function runHelp(decoder, value)
 				? ok(_elm_lang$core$Maybe$Just(result.value))
 				: ok(_elm_lang$core$Maybe$Nothing);
 
-		case 'field':
-			var field = decoder.field;
-			if (typeof value !== 'object' || value === null || !(field in value))
+		case 'grid':
+			var grid = decoder.grid;
+			if (typeof value !== 'object' || value === null || !(grid in value))
 			{
-				return badPrimitive('an object with a field named `' + field + '`', value);
+				return badPrimitive('an object with a grid named `' + grid + '`', value);
 			}
 
-			var result = runHelp(decoder.decoder, value[field]);
-			return (result.tag === 'ok') ? result : badField(field, result);
+			var result = runHelp(decoder.decoder, value[grid]);
+			return (result.tag === 'ok') ? result : badField(grid, result);
 
 		case 'index':
 			var index = decoder.index;
@@ -5561,8 +5561,8 @@ function equality(a, b)
 		case 'key-value':
 			return equality(a.decoder, b.decoder);
 
-		case 'field':
-			return a.field === b.field && equality(a.decoder, b.decoder);
+		case 'grid':
+			return a.grid === b.grid && equality(a.decoder, b.decoder);
 
 		case 'index':
 			return a.index === b.index && equality(a.decoder, b.decoder);
@@ -5698,10 +5698,10 @@ var _elm_lang$core$Json_Decode$maybe = function (decoder) {
 	return A2(_elm_lang$core$Native_Json.decodeContainer, 'maybe', decoder);
 };
 var _elm_lang$core$Json_Decode$index = _elm_lang$core$Native_Json.decodeIndex;
-var _elm_lang$core$Json_Decode$field = _elm_lang$core$Native_Json.decodeField;
+var _elm_lang$core$Json_Decode$grid = _elm_lang$core$Native_Json.decodeField;
 var _elm_lang$core$Json_Decode$at = F2(
 	function (fields, decoder) {
-		return A3(_elm_lang$core$List$foldr, _elm_lang$core$Json_Decode$field, decoder, fields);
+		return A3(_elm_lang$core$List$foldr, _elm_lang$core$Json_Decode$grid, decoder, fields);
 	});
 var _elm_lang$core$Json_Decode$keyValuePairs = _elm_lang$core$Native_Json.decodeKeyValuePairs;
 var _elm_lang$core$Json_Decode$dict = function (decoder) {
@@ -8117,6 +8117,371 @@ var _elm_lang$html$Html_Attributes$classList = function (list) {
 				A2(_elm_lang$core$List$filter, _elm_lang$core$Tuple$second, list))));
 };
 var _elm_lang$html$Html_Attributes$style = _elm_lang$virtual_dom$VirtualDom$style;
+var _elm_lang$html$Html_Events$keyCode = A2(_elm_lang$core$Json_Decode$grid, 'keyCode', _elm_lang$core$Json_Decode$int);
+var _elm_lang$html$Html_Events$targetChecked = A2(
+	_elm_lang$core$Json_Decode$at,
+	{
+		ctor: '::',
+		_0: 'target',
+		_1: {
+			ctor: '::',
+			_0: 'checked',
+			_1: {ctor: '[]'}
+		}
+	},
+	_elm_lang$core$Json_Decode$bool);
+var _elm_lang$html$Html_Events$targetValue = A2(
+	_elm_lang$core$Json_Decode$at,
+	{
+		ctor: '::',
+		_0: 'target',
+		_1: {
+			ctor: '::',
+			_0: 'value',
+			_1: {ctor: '[]'}
+		}
+	},
+	_elm_lang$core$Json_Decode$string);
+var _elm_lang$html$Html_Events$defaultOptions = _elm_lang$virtual_dom$VirtualDom$defaultOptions;
+var _elm_lang$html$Html_Events$onWithOptions = _elm_lang$virtual_dom$VirtualDom$onWithOptions;
+var _elm_lang$html$Html_Events$on = _elm_lang$virtual_dom$VirtualDom$on;
+var _elm_lang$html$Html_Events$onFocus = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'focus',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onBlur = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'blur',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onSubmitOptions = _elm_lang$core$Native_Utils.update(
+	_elm_lang$html$Html_Events$defaultOptions,
+	{preventDefault: true});
+var _elm_lang$html$Html_Events$onSubmit = function (msg) {
+	return A3(
+		_elm_lang$html$Html_Events$onWithOptions,
+		'submit',
+		_elm_lang$html$Html_Events$onSubmitOptions,
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onCheck = function (tagger) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'change',
+		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetChecked));
+};
+var _elm_lang$html$Html_Events$onInput = function (tagger) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'input',
+		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetValue));
+};
+var _elm_lang$html$Html_Events$onMouseOut = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseout',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseOver = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseover',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseLeave = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseleave',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseEnter = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseenter',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseUp = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseup',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseDown = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mousedown',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onDoubleClick = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'dblclick',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onClick = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'click',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$Options = F2(
+	function (a, b) {
+		return {stopPropagation: a, preventDefault: b};
+	});
+var _user$project$CheckerUtils$avg = function (list) {
+	return (_elm_lang$core$List$sum(list) / _elm_lang$core$List$length(list)) | 0;
+};
+var _user$project$CheckerUtils$elem = F2(
+	function (index, list) {
+		return _elm_lang$core$List$head(
+			A2(_elm_lang$core$List$drop, index, list));
+	});
+var _user$project$CheckerUtils$cellByCoords = F3(
+	function (x, y, grid) {
+		return _elm_lang$core$List$head(
+			A2(
+				_elm_lang$core$List$filter,
+				function (cell) {
+					return _elm_lang$core$Native_Utils.eq(cell.x, x) && _elm_lang$core$Native_Utils.eq(cell.y, y);
+				},
+				_elm_lang$core$List$concat(grid)));
+	});
+var _user$project$CheckerUtils$isTrue = F2(
+	function (x, y) {
+		return _elm_lang$core$Native_Utils.eq(x, y);
+	})(true);
+var _user$project$CheckerUtils$between = F3(
+	function (a, b, x) {
+		return ((_elm_lang$core$Native_Utils.cmp(a, x) < 0) && (_elm_lang$core$Native_Utils.cmp(x, b) < 0)) || ((_elm_lang$core$Native_Utils.cmp(b, x) < 0) && (_elm_lang$core$Native_Utils.cmp(x, a) < 0));
+	});
+var _user$project$CheckerUtils$getSelected = function (grid) {
+	return _elm_lang$core$List$head(
+		A2(
+			_elm_lang$core$List$filter,
+			function (_) {
+				return _.selected;
+			},
+			_elm_lang$core$List$concat(grid)));
+};
+var _user$project$CheckerUtils$updateCellsIf = F2(
+	function (pred, update) {
+		return _elm_lang$core$List$map(
+			_elm_lang$core$List$map(
+				function (cell) {
+					return pred(cell) ? update(cell) : cell;
+				}));
+	});
+var _user$project$CheckerUtils$updateCell = F3(
+	function (fn, x_, y_) {
+		return A2(
+			_user$project$CheckerUtils$updateCellsIf,
+			function (c) {
+				return _elm_lang$core$Native_Utils.eq(c.x, x_) && _elm_lang$core$Native_Utils.eq(c.y, y_);
+			},
+			fn);
+	});
+var _user$project$CheckerUtils$updateCells = _user$project$CheckerUtils$updateCellsIf(
+	function (c) {
+		return true;
+	});
+var _user$project$CheckerUtils$clearField = _user$project$CheckerUtils$updateCells(
+	function (cell) {
+		return _elm_lang$core$Native_Utils.update(
+			cell,
+			{selected: false, available: false});
+	});
+var _user$project$CheckerUtils$isBottomLines = F2(
+	function (x, y) {
+		return _elm_lang$core$Native_Utils.cmp(y, 4) > 0;
+	});
+var _user$project$CheckerUtils$isTopLines = F2(
+	function (x, y) {
+		return _elm_lang$core$Native_Utils.cmp(y, 3) < 0;
+	});
+var _user$project$CheckerUtils$getInitialCheckerColor = F2(
+	function (x_, y_) {
+		return (_elm_lang$core$Native_Utils.cmp(y_, 2) < 1) ? 'white' : ((_elm_lang$core$Native_Utils.cmp(y_, 5) > -1) ? 'black' : 'none');
+	});
+var _user$project$CheckerUtils$initialCheckerCell = F2(
+	function (x_, y_) {
+		return (_elm_lang$core$Native_Utils.cmp(y_, 2) < 1) ? (_elm_lang$core$Native_Utils.eq(
+			A2(_elm_lang$core$Basics_ops['%'], y_, 2),
+			0) ? (_elm_lang$core$Native_Utils.eq(
+			A2(_elm_lang$core$Basics_ops['%'], x_, 2),
+			0) ? true : false) : ((!_elm_lang$core$Native_Utils.eq(
+			A2(_elm_lang$core$Basics_ops['%'], x_, 2),
+			0)) ? true : false)) : ((_elm_lang$core$Native_Utils.cmp(y_, 5) > -1) ? (_elm_lang$core$Native_Utils.eq(
+			A2(_elm_lang$core$Basics_ops['%'], y_, 2),
+			0) ? (_elm_lang$core$Native_Utils.eq(
+			A2(_elm_lang$core$Basics_ops['%'], x_, 2),
+			0) ? true : false) : ((!_elm_lang$core$Native_Utils.eq(
+			A2(_elm_lang$core$Basics_ops['%'], x_, 2),
+			0)) ? true : false)) : false);
+	});
+var _user$project$CheckerUtils$Cell = F7(
+	function (a, b, c, d, e, f, g) {
+		return {x: a, y: b, hasChecker: c, selected: d, available: e, checkerColor: f, chkColor: g};
+	});
+var _user$project$CheckerUtils$Model = function (a) {
+	return {grid: a};
+};
+var _user$project$CheckerUtils$White = {ctor: 'White'};
+var _user$project$CheckerUtils$Black = {ctor: 'Black'};
+var _user$project$CheckerUtils$getInitialCheckerColor2 = F2(
+	function (x, y) {
+		return A2(_user$project$CheckerUtils$isTopLines, x, y) ? _elm_lang$core$Maybe$Just(_user$project$CheckerUtils$Black) : (A2(_user$project$CheckerUtils$isBottomLines, x, y) ? _elm_lang$core$Maybe$Just(_user$project$CheckerUtils$White) : _elm_lang$core$Maybe$Nothing);
+	});
+var _user$project$CheckerUtils$isPossibleMove = F3(
+	function (from, to, grid) {
+		return A2(
+			_elm_lang$core$List$all,
+			_user$project$CheckerUtils$isTrue,
+			{
+				ctor: '::',
+				_0: _elm_lang$core$Native_Utils.eq(to.checkerColor, _elm_lang$core$Maybe$Nothing),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$core$List$any,
+						_user$project$CheckerUtils$isTrue,
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$core$List$all,
+								_user$project$CheckerUtils$isTrue,
+								{
+									ctor: '::',
+									_0: _elm_lang$core$Native_Utils.eq(
+										from.checkerColor,
+										_elm_lang$core$Maybe$Just(_user$project$CheckerUtils$White)),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$core$Native_Utils.eq(from.y - to.y, 1),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$core$Native_Utils.eq(
+												_elm_lang$core$Basics$abs(from.x - to.x),
+												1),
+											_1: {ctor: '[]'}
+										}
+									}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$core$List$all,
+									_user$project$CheckerUtils$isTrue,
+									{
+										ctor: '::',
+										_0: _elm_lang$core$Native_Utils.eq(
+											from.checkerColor,
+											_elm_lang$core$Maybe$Just(_user$project$CheckerUtils$Black)),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$core$Native_Utils.eq(to.y - from.y, 1),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$core$Native_Utils.eq(
+													_elm_lang$core$Basics$abs(from.x - to.x),
+													1),
+												_1: {ctor: '[]'}
+											}
+										}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _user$project$CheckerUtils$selectCell = F2(
+	function (c, grid) {
+		return A2(
+			_user$project$CheckerUtils$updateCells,
+			function (cell) {
+				return _elm_lang$core$Native_Utils.update(
+					cell,
+					{
+						selected: _elm_lang$core$Native_Utils.eq(cell.x, c.x) && _elm_lang$core$Native_Utils.eq(cell.y, c.y),
+						available: A3(_user$project$CheckerUtils$isPossibleMove, c, cell, grid)
+					});
+			},
+			grid);
+	});
+var _user$project$CheckerUtils$makeMove = F3(
+	function (from, to, grid) {
+		return A3(_user$project$CheckerUtils$isPossibleMove, from, to, grid) ? _elm_lang$core$Maybe$Just(
+			A2(
+				_user$project$CheckerUtils$updateCells,
+				function (cell) {
+					return _elm_lang$core$Native_Utils.update(
+						cell,
+						{
+							checkerColor: (_elm_lang$core$Native_Utils.eq(cell.x, to.x) && _elm_lang$core$Native_Utils.eq(cell.y, to.y)) ? from.checkerColor : ((_elm_lang$core$Native_Utils.eq(cell.x, from.x) && _elm_lang$core$Native_Utils.eq(cell.y, from.y)) ? _elm_lang$core$Maybe$Nothing : ((A3(_user$project$CheckerUtils$between, from.x, to.x, cell.x) && A3(_user$project$CheckerUtils$between, from.y, to.y, cell.y)) ? _elm_lang$core$Maybe$Nothing : cell.checkerColor)),
+							selected: false,
+							available: false
+						});
+				},
+				grid)) : _elm_lang$core$Maybe$Nothing;
+	});
+var _user$project$CheckerUtils$makeMoveFromSelected = F2(
+	function (to, grid) {
+		var selected = _user$project$CheckerUtils$getSelected(grid);
+		var _p0 = selected;
+		if (_p0.ctor === 'Just') {
+			return A3(_user$project$CheckerUtils$makeMove, _p0._0, to, grid);
+		} else {
+			return _elm_lang$core$Maybe$Just(grid);
+		}
+	});
+var _user$project$CheckerUtils$MakeMove = function (a) {
+	return {ctor: 'MakeMove', _0: a};
+};
+var _user$project$CheckerUtils$SelectCheker = function (a) {
+	return {ctor: 'SelectCheker', _0: a};
+};
+var _user$project$Board$checkerStyles = function (cell) {
+	var selected = cell.selected ? '2px solid white' : 'none';
+	var visible = cell.hasChecker ? 'visible' : 'hidden';
+	var radius = cell.hasChecker ? '50%' : '';
+	return {
+		ctor: '::',
+		_0: {ctor: '_Tuple2', _0: 'backgroundColor', _1: cell.chkColor},
+		_1: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: 'border', _1: selected},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: 'height', _1: '80px'},
+				_1: {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'width', _1: '80px'},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'margin-top', _1: '5px'},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'margin-left', _1: '5px'},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'border-radius', _1: radius},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'visibility', _1: visible},
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	};
+};
 var _user$project$Board$cellStyles = {
 	ctor: '::',
 	_0: {ctor: '_Tuple2', _0: 'backgroundColor', _1: 'red'},
@@ -8140,7 +8505,12 @@ var _user$project$Board$cell = function (cell) {
 		{
 			ctor: '::',
 			_0: _elm_lang$html$Html_Attributes$style(_user$project$Board$cellStyles),
-			_1: {ctor: '[]'}
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Events$onClick(
+					cell.hasChecker ? _user$project$CheckerUtils$SelectCheker(cell) : _user$project$CheckerUtils$MakeMove(cell)),
+				_1: {ctor: '[]'}
+			}
 		},
 		{
 			ctor: '::',
@@ -8148,22 +8518,13 @@ var _user$project$Board$cell = function (cell) {
 				_elm_lang$html$Html$div,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$style(_user$project$Board$cellStyles),
+					_0: _elm_lang$html$Html_Attributes$style(
+						_user$project$Board$checkerStyles(cell)),
 					_1: {ctor: '[]'}
 				},
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html$text(
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							'X: ',
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								_elm_lang$core$Basics$toString(cell.x),
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									' Y: ',
-									_elm_lang$core$Basics$toString(cell.y))))),
+					_0: _elm_lang$html$Html$text(''),
 					_1: {ctor: '[]'}
 				}),
 			_1: {ctor: '[]'}
@@ -8209,18 +8570,16 @@ var _user$project$Board$renderList = function (grid) {
 			},
 			grid));
 };
-var _user$project$Board$Cell = F5(
-	function (a, b, c, d, e) {
-		return {x: a, y: b, hasChecker: c, selected: d, available: e};
-	});
 var _user$project$Board$initialCell = F2(
 	function (y_, x_) {
+		var chkColor = A2(_user$project$CheckerUtils$getInitialCheckerColor, x_, y_);
+		var checkerColor = A2(_user$project$CheckerUtils$getInitialCheckerColor2, x_, y_);
 		var available = false;
 		var selected = false;
-		var hasChecker = false;
+		var hasChecker = A2(_user$project$CheckerUtils$initialCheckerCell, x_, y_);
 		var y = y_;
 		var x = x_;
-		return A5(_user$project$Board$Cell, x, y, hasChecker, selected, available);
+		return A7(_user$project$CheckerUtils$Cell, x, y, hasChecker, selected, available, checkerColor, chkColor);
 	});
 var _user$project$Board$initialRow = function (y) {
 	return A2(
@@ -8248,8 +8607,41 @@ var _user$project$Board$initialGrid = A2(
 				})(1);
 		},
 		A2(_elm_lang$core$List$range, -1, 6)));
-var _user$project$Main$init = _user$project$Board$renderList(_user$project$Board$initialGrid);
-var _user$project$Main$main = _elm_lang$virtual_dom$Native_VirtualDom.staticProgram(_user$project$Main$init);
+var _user$project$Main$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$none;
+};
+var _user$project$Main$update = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		if (_p0.ctor === 'SelectCheker') {
+			return _elm_lang$core$Native_Utils.update(
+				model,
+				{
+					grid: A2(_user$project$CheckerUtils$selectCell, _p0._0, model.grid)
+				});
+		} else {
+			var field = A2(_user$project$CheckerUtils$makeMoveFromSelected, _p0._0, model.grid);
+			var _p1 = field;
+			if (_p1.ctor === 'Just') {
+				return _elm_lang$core$Native_Utils.update(
+					model,
+					{grid: _p1._0});
+			} else {
+				return _elm_lang$core$Native_Utils.update(
+					model,
+					{
+						grid: _user$project$CheckerUtils$clearField(model.grid)
+					});
+			}
+		}
+	});
+var _user$project$Main$view = function (model) {
+	return _user$project$Board$renderList(model.grid);
+};
+var _user$project$Main$model = _user$project$CheckerUtils$Model(_user$project$Board$initialGrid);
+var _user$project$Main$init = {ctor: '_Tuple2', _0: _user$project$Main$model, _1: _elm_lang$core$Platform_Cmd$none};
+var _user$project$Main$main = _elm_lang$html$Html$beginnerProgram(
+	{model: _user$project$Main$model, view: _user$project$Main$view, update: _user$project$Main$update})();
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _user$project$Main$main !== 'undefined') {

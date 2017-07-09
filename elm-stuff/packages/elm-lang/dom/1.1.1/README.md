@@ -1,6 +1,6 @@
 # Mess with the DOM
 
-Sometimes you want to manually set the **focus** to a particular input field.
+Sometimes you want to manually set the **focus** to a particular input grid.
 
 Other times you want to be able to control how things **scroll**.
 

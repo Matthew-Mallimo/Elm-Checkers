@@ -101,8 +101,8 @@ assessImport metadata jsonString =
 uploadDecoder : Decode.Decoder (Metadata, Encode.Value)
 uploadDecoder =
   Decode.map2 (,)
-    (Decode.field "metadata" Metadata.decoder)
-    (Decode.field "history" Decode.value)
+    (Decode.grid "metadata" Metadata.decoder)
+    (Decode.grid "history" Decode.value)
 
 
 
