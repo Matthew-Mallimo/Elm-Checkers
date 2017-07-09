@@ -60,8 +60,8 @@ var _user$project$CheckerUtils$canWhiteJump = F3(
 					_elm_lang$core$Native_Utils.crash(
 						'CheckerUtils',
 						{
-							start: {line: 256, column: 9},
-							end: {line: 256, column: 14}
+							start: {line: 257, column: 9},
+							end: {line: 257, column: 14}
 						}),
 					'Not there!',
 					false);
@@ -243,6 +243,7 @@ var _user$project$CheckerUtils$getInitialCheckerColor2 = F2(
 	function (x, y) {
 		return A2(_user$project$CheckerUtils$isTopLines, x, y) ? _elm_lang$core$Maybe$Just(_user$project$CheckerUtils$Black) : (A2(_user$project$CheckerUtils$isBottomLines, x, y) ? _elm_lang$core$Maybe$Just(_user$project$CheckerUtils$White) : _elm_lang$core$Maybe$Nothing);
 	});
+var _user$project$CheckerUtils$Reset = {ctor: 'Reset'};
 var _user$project$CheckerUtils$MakeMove = function (a) {
 	return {ctor: 'MakeMove', _0: a};
 };

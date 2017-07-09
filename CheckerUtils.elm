@@ -33,6 +33,7 @@ type Color = Black | White
 type Msg
   = SelectCheker Cell
   | MakeMove Cell
+  | Reset
 
 -- This helps place checkers at the start of the game
 initialCheckerCell : X -> Y -> Bool

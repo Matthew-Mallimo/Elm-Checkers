@@ -1,12 +1,13 @@
 module Main exposing (..)
 
 import Html exposing (..)
+import Html.Events exposing (onClick)
 import List exposing (..)
 import Board exposing (..)
 import CheckerUtils exposing (..)
 main =
     Html.beginnerProgram
-    { model = model
+    { model = initModel
     , view = view
     , update = update
     }
@@ -15,11 +16,11 @@ main =
 
 init : (Model, Cmd Msg)
 init =
-  (model, Cmd.none)
+  (initModel, Cmd.none)
 
 
-model : Model
-model = 
+initModel : Model
+initModel = 
     Model initialGrid True
 
 {-----------------
@@ -28,7 +29,9 @@ model =
 
 view : Model -> Html Msg
 view model = 
+  div[][button [onClick Reset][text "Reset Board"],
     renderList model.grid
+  ]
 
 
 {-----------------
@@ -54,3 +57,5 @@ update msg model =
             { model | grid = newGrid, turn = not model.turn }
           Nothing ->
             { model | grid = clearGrid  model.grid, turn = model.turn }
+    Reset ->
+      initModel
