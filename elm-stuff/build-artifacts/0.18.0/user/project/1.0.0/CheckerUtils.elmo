@@ -60,8 +60,8 @@ var _user$project$CheckerUtils$canWhiteJump = F3(
 					_elm_lang$core$Native_Utils.crash(
 						'CheckerUtils',
 						{
-							start: {line: 257, column: 9},
-							end: {line: 257, column: 14}
+							start: {line: 239, column: 9},
+							end: {line: 239, column: 14}
 						}),
 					'Not there!',
 					false);
@@ -201,14 +201,6 @@ var _user$project$CheckerUtils$makeMoveFromSelected = F2(
 			return _elm_lang$core$Maybe$Just(grid);
 		}
 	});
-var _user$project$CheckerUtils$isBottomLines = F2(
-	function (x, y) {
-		return _elm_lang$core$Native_Utils.cmp(y, 4) > 0;
-	});
-var _user$project$CheckerUtils$isTopLines = F2(
-	function (x, y) {
-		return _elm_lang$core$Native_Utils.cmp(y, 3) < 0;
-	});
 var _user$project$CheckerUtils$getInitialCheckerColor = F2(
 	function (x_, y_) {
 		return (_elm_lang$core$Native_Utils.cmp(y_, 2) < 1) ? 'white' : ((_elm_lang$core$Native_Utils.cmp(y_, 5) > -1) ? 'black' : 'none');
@@ -229,9 +221,9 @@ var _user$project$CheckerUtils$initialCheckerCell = F2(
 			A2(_elm_lang$core$Basics_ops['%'], x_, 2),
 			0)) ? true : false)) : false);
 	});
-var _user$project$CheckerUtils$Cell = F7(
-	function (a, b, c, d, e, f, g) {
-		return {x: a, y: b, hasChecker: c, selected: d, available: e, checkerColor: f, chkColor: g};
+var _user$project$CheckerUtils$Cell = F6(
+	function (a, b, c, d, e, f) {
+		return {x: a, y: b, hasChecker: c, selected: d, available: e, chkColor: f};
 	});
 var _user$project$CheckerUtils$Model = F2(
 	function (a, b) {
@@ -239,10 +231,6 @@ var _user$project$CheckerUtils$Model = F2(
 	});
 var _user$project$CheckerUtils$White = {ctor: 'White'};
 var _user$project$CheckerUtils$Black = {ctor: 'Black'};
-var _user$project$CheckerUtils$getInitialCheckerColor2 = F2(
-	function (x, y) {
-		return A2(_user$project$CheckerUtils$isTopLines, x, y) ? _elm_lang$core$Maybe$Just(_user$project$CheckerUtils$Black) : (A2(_user$project$CheckerUtils$isBottomLines, x, y) ? _elm_lang$core$Maybe$Just(_user$project$CheckerUtils$White) : _elm_lang$core$Maybe$Nothing);
-	});
 var _user$project$CheckerUtils$Reset = {ctor: 'Reset'};
 var _user$project$CheckerUtils$MakeMove = function (a) {
 	return {ctor: 'MakeMove', _0: a};

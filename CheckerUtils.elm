@@ -11,7 +11,6 @@ type alias Cell = {
   , hasChecker : Bool
   , selected : Bool
   , available: Bool
-  , checkerColor: Maybe Color
   , chkColor : String
 }
 
@@ -71,23 +70,6 @@ getInitialCheckerColor x_ y_ =
       "black"
   else
       "none"
-isTopLines : X -> Y -> Bool
-isTopLines x y= y < 3
-
-
-isBottomLines : X -> Y -> Bool
-isBottomLines x y = y > 4
-
-
-getInitialCheckerColor2 : X -> Y -> Maybe Color
-getInitialCheckerColor2 x y =
-  if isTopLines x y then
-    Just Black
-
-  else if isBottomLines x y then
-    Just White
-  else
-    Nothing
 
 updateCellsIf : (Cell -> Bool) -> (Cell -> Cell) -> Grid -> Grid
 updateCellsIf pred update =

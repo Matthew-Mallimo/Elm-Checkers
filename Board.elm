@@ -14,10 +14,9 @@ initialCell y_ x_=
         hasChecker = initialCheckerCell x_ y_
         selected = False
         available = False
-        checkerColor = getInitialCheckerColor2 x_ y_
         chkColor = getInitialCheckerColor x_ y_
     in
-        Cell x y hasChecker selected available checkerColor chkColor
+        Cell x y hasChecker selected available chkColor
 
 initialRow : Y -> Row
 initialRow y = 

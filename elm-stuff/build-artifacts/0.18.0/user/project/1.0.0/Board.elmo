@@ -131,13 +131,12 @@ var _user$project$Board$renderList = function (grid) {
 var _user$project$Board$initialCell = F2(
 	function (y_, x_) {
 		var chkColor = A2(_user$project$CheckerUtils$getInitialCheckerColor, x_, y_);
-		var checkerColor = A2(_user$project$CheckerUtils$getInitialCheckerColor2, x_, y_);
 		var available = false;
 		var selected = false;
 		var hasChecker = A2(_user$project$CheckerUtils$initialCheckerCell, x_, y_);
 		var y = y_;
 		var x = x_;
-		return A7(_user$project$CheckerUtils$Cell, x, y, hasChecker, selected, available, checkerColor, chkColor);
+		return A6(_user$project$CheckerUtils$Cell, x, y, hasChecker, selected, available, chkColor);
 	});
 var _user$project$Board$initialRow = function (y) {
 	return A2(
